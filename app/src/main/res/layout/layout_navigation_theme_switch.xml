@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+      android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+    <android.support.v7.widget.SwitchCompat
+        android:id="@+id/view_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:theme="@style/MySwitch"
+        android:gravity="center" />
+</FrameLayout>
+
+

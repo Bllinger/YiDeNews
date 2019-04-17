@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">News</string>
+
+    <string name="menu_toutiao">头条</string>
+    <string name="menu_shehui">社会</string>
+    <string name="menu_guonei">国内</string>
+    <string name="menu_yule">娱乐</string>
+    <string name="menu_tiyu">体育</string>
+    <string name="menu_junshi">军事</string>
+    <string name="menu_keji">科技</string>
+    <string name="menu_caijing">财经</string>
+    <string name="menu_shishang">时尚</string>
+    <string name="menu_theme">主题</string>
+    <string name="menu_setting">设置</string>
+    <string name="tv_test">新闻标题\n可以很长.</string>
+    <string name="alert_refresh_success">数据刷新成功...</string>
+    <string name="menu_collection">我的收藏</string>
+    <string name="dialog_cancel_collection">是否移除该条收藏？</string>
+    <string name="dialog_add_collection">是否收藏该条新闻？</string>
+    <string name="tv_collect_title">我的收藏</string>
+    <string name="tv_toReader_title">关于</string>
+    <string name="tv_reader_content">一个简单易用的新闻App</string>
+    <string name="tv_about"></string>
+    <string name="tv_contact">By 310 Group</string>
+</resources>
