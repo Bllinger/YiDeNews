@@ -47,7 +47,7 @@
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <com.wei.base.utils.CircleImageView
+    <com.Blinger.base.utils.CircleImageView
         android:id="@+id/up_arrow_iv"
         android:layout_width="@dimen/dp_38"
         android:layout_height="@dimen/dp_38"

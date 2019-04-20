@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.wei.base">
+    package="com.Blinger.base">
 
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -20,7 +20,7 @@
             android:value="1280"></meta-data>
 
 
-        <activity android:name=".ui.WebViewActivity"
+        <activity android:name="com.Blinger.base.ui.WebViewActivity"
             android:configChanges="orientation|screenSize"
             android:screenOrientation="portrait"/>
 

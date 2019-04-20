@@ -63,7 +63,7 @@
     </RelativeLayout>
 
 
-    <com.wei.news.utils.ObservableScrollView
+    <com.Blinger.YiDeNews.utils.ObservableScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dp_49"
@@ -141,7 +141,7 @@
 
         </RelativeLayout>
 
-    </com.wei.news.utils.ObservableScrollView>
+    </com.Blinger.YiDeNews.utils.ObservableScrollView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
