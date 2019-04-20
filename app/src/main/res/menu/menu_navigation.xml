@@ -94,11 +94,6 @@
     <item android:title="更多">
         <menu>
             <item
-                android:id="@+id/menu_theme"
-                android:icon="@drawable/icon_theme"
-                android:title="@string/menu_theme"
-                app:actionLayout="@layout/layout_navigation_theme_switch" />
-            <item
                 android:id="@+id/menu_collection"
                 android:icon="@drawable/icon_collection"
                 android:title="@string/menu_collection" />

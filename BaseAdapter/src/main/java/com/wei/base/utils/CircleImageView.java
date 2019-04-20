@@ -12,9 +12,9 @@ import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
 
 /**
- * 作者：赵若位
- * 时间：2018/5/4 12:11
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 12:11
+ * 邮箱：1760567382@qq.com
  * 功能：圆形的图片
  */
 

@@ -17,8 +17,8 @@ import com.wei.base.utils.NetUtils;
 
 /**
  * 作者：310 Group
- * 时间：2018/7/12 22:32
- * 邮箱：1070138445@qq.com
+ * 时间：2019/4/1 22:32
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class  BaseApplication extends Application

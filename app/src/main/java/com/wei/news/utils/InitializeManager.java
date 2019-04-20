@@ -18,9 +18,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 /**
- * 作者：赵若位
- * 时间：2018/11/28 13:33
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/7 13:33
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class InitializeManager extends IntentService

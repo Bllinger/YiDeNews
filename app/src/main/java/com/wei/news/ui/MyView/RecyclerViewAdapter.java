@@ -26,18 +26,19 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private Context context;
-        //private List<String> headImgTypeList;
+        private List<Integer> headImgTypeList;
         private List<String> userNameList;
         private List<String> timeList;
         private List<Integer> acclaimNumList;
         private List<String> reviewContentList;
         private List<Integer> statusList;
 
-        public RecyclerViewAdapter(Context context, List<String> userNameList, List<String> timeList,List<Integer> acclaimNumList,List<String> reviewContentList,List<Integer> statusList
+        public RecyclerViewAdapter(Context context, List<String> userNameList, List<String> timeList,List<Integer> acclaimNumList,List<String> reviewContentList,List<Integer> statusList,List<Integer> headImgTypeList
                 ) {
             this.context = context;
 
-            //this.headImgTypeList = headImgTypeList;
+            this.headImgTypeList = headImgTypeList;
+            ///LogUtils.d(Constant.debugName+"RecyclerViewAdapter",this.headImgTypeList.);
             this.userNameList = userNameList;
             this.timeList = timeList;
             this.acclaimNumList = acclaimNumList;
@@ -90,12 +91,37 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
                 if (statusList.get(position) != null){
                     ((ViewHolderOther)holder).acclaimImg.setImageResource((statusList.get(position)) != 0 ? R.drawable.zan_red : R.drawable.zan_grey);
                 }
-//            if (headImgTypeList.get(position - 1) != null){//设置头像
-//                switch (headImgTypeList.get(position - 1)){
-//                    case "0":
-//                        //不同值，不同头像
-//                }
-//            }
+                if (headImgTypeList.get(position) != null){
+                    int id = 0;
+                    switch (headImgTypeList.get(position)){
+                        case 1:
+                            id = R.drawable.head_image1;
+                            break;
+                        case 2:
+                            id = R.drawable.head_image2;
+                            break;
+                        case 3:
+                            id = R.drawable.head_image3;
+                            break;
+                        case 4:
+                            id = R.drawable.head_image4;
+                            break;
+                        case 5:
+                            id = R.drawable.head_image5;
+                            break;
+                        case 6:
+                            id = R.drawable.head_image6;
+                            break;
+                        case 7:
+                            id = R.drawable.head_image7;
+                            break;
+                        default:
+                            id = R.drawable.head_image6;
+                            break;
+                    }
+                    ((ViewHolderOther)holder).circleImageView.setImageResource(id);
+                }
+
             }else{
                 int type= (int) payloads.get(0);
                 switch (type){
@@ -116,16 +142,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
     //新增评论
-    public void addData(int position,String username,String date,int acclaimNum, String reviewContent,int status) {
+    public void addData(int position,String username,String date,int acclaimNum, String reviewContent,int status,int imageType) {
         //mDatas.add(position, "Insert " + position);
+
         userNameList.add(position,username);
         timeList.add(position,date);
         acclaimNumList.add(position,acclaimNum);
         reviewContentList.add(position,reviewContent);
         statusList.add(position,status);
+        headImgTypeList.add(position,imageType);
+        LogUtils.d(Constant.debugName+"WebActivity list size",acclaimNumList.size()+"");
 
         notifyItemInserted(position);
-
 
     }
 

@@ -58,9 +58,9 @@ import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * 作者：赵若位
- * 时间：2018/5/4 12:16
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/3 12:16
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 
@@ -111,6 +111,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private String reviewId;
     private String location;
+    private int imageType;
 
     private Long commentCount = 0l;//新闻评论数
     private int articleAcclaimCount = 0;//新闻获赞个数
@@ -229,7 +230,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     }
 
     private void initRecyclerView() {
-        mRecyclerViewAdapter = new RecyclerViewAdapter(BaseApplication.getContext(), userNameList, timeList, acclaimNumList, reviewContentList, statusList);//需要修改
+        mRecyclerViewAdapter = new RecyclerViewAdapter(BaseApplication.getContext(), userNameList, timeList, acclaimNumList, reviewContentList, statusList,imageTypeList);//需要修改
         rvReview.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -240,8 +241,9 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                         if (imageView.getTag().equals("un_acclaim")) {
                             imageView.setTag("acclaim");
                             imageView.setImageResource(R.drawable.zan_red);
+                            LogUtils.d(Constant.debugName+"WebActivity position",position+"");
                             mRecyclerViewAdapter.addAcclaimNum(position);
-                            // LogUtils.d(Constant.debugName+"position",position+"");
+
                             mPresenter.postAcclaim(reviewId, uuid, 0, 1);//评论点赞+1
                         } else {
                             imageView.setTag("un_acclaim");
@@ -257,7 +259,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     }
 
     private void newReview(String reviewContent) {
-        mRecyclerViewAdapter.addData(0, location, TimeUtils.getTime() + "", 0, reviewContent, 0);
+        mRecyclerViewAdapter.addData(userNameList.size(), location, TimeUtils.getTime() + "", 0, reviewContent, 0,imageType);
         reviewId = Md5.md5(reviewContent + TimeUtils.getTime() + uuid, "hello 310 lab");
 
         //Long newsId,Long reviewId,String reviewType,String reviewContent,String UID
@@ -312,8 +314,10 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         SharedPreferences sharedPreferences = getSharedPreferences("init", MODE_PRIVATE);
         uuid = sharedPreferences.getString("uuid", "");
         location = sharedPreferences.getString("name", "");
+        imageType = sharedPreferences.getInt("type",0);
         LogUtils.d(Constant.debugName, "UUID:" + uuid);
         LogUtils.d(Constant.debugName, "Location:" + location);
+        LogUtils.d(Constant.debugName, "imageType" + imageType);
 
         //取得信息处
         mUserTail.setScanTime(simpleDateFormat.format(date));
@@ -324,7 +328,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         mUserTail.setNewsUrl(mData.getUrl());
         ///LogUtils.d(Constant.debugName+ " userTail   ",mUserTail.getUserId(), mUserTail.getNewsId(), mUserTail.getNewsTitle(), mUserTail.getNewsType(), mUserTail.getScanTime(), mUserTail.getNewsUrl());
         mPresenter.postHistory(mUserTail.getUserId(), mUserTail.getNewsId(), mUserTail.getNewsTitle(), mUserTail.getNewsType(), mUserTail.getScanTime(), mUserTail.getNewsUrl());//需要修改
-        //mPresenter.getReviewList(mData.getUniquekey(),uuid);//获取评论
+        mPresenter.getReviewList(mData.getUniquekey(),uuid);//获取评论
     }
 
     @OnClick({R.id.img_finish, R.id.img_collection, R.id.im_zan, R.id.rl_rv, R.id.rv_button,R.id.share_iv})
@@ -364,7 +368,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
 
                 if (clip != null){
                     clipboard.setPrimaryClip(clip);
-                    ToastUtil.getInstance().showSuccess(App.getContext(),"复制链接成功");
+                    ToastUtil.getInstance().showSuccess(App.getContext(),"复制分享链接成功");
                 }
 
 
@@ -430,24 +434,31 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     public void showData(Object obj) {
         if (obj instanceof List) {
             if (((List) obj).get(0) instanceof CommentBean) {
-                //userNameList,timeList,acclaimNumList,reviewContentList
+                ///userNameList,timeList,acclaimNumList,reviewContentList
                 List<CommentBean> list = (List<CommentBean>) obj;
 
-                isAcclaim = list.get(0).getComment().getAcclaimStatus();//是否点赞
-                articleAcclaimCount = list.get(0).getComment().getAcclaimCount();//文章点赞数
-                commentCount = list.get(0).getComment().getCommentCount();//文章评论数
+                isAcclaim = list.get(0).getObject().getAcclaimStatus();//是否点赞
+
+                articleAcclaimCount = list.get(0).getObject().getAcclaimCount();//文章点赞数
+                commentCount = list.get(0).getObject().getCommentCount();//文章评论数
 
                 for (int i = 1; i < list.size(); i++) {
-                    userNameList.add(list.get(i).getComment().getName());
-                    timeList.add(list.get(i).getComment().getCommentTime());
-                    acclaimNumList.add(list.get(i).getComment().getAcclaimCount());//评论点赞数
-                    reviewContentList.add(list.get(i).getComment().getContent());
-                    imageTypeList.add(list.get(i).getComment().getImageType());
-                    statusList.add(list.get(i).getComment().getAcclaimStatus());
+                    userNameList.add(list.get(i).getObject().getName());
+                    timeList.add(list.get(i).getObject().getCommentTime());
+                    acclaimNumList.add(list.get(i).getObject().getAcclaimCount());//评论点赞数
+                    reviewContentList.add(list.get(i).getObject().getContent());
+                    imageTypeList.add(list.get(i).getObject().getImageType());
+                   // LogUtils.d(Constant.debugName+"WebActivity   ",imageTypeList.get(0)+"");
+                    statusList.add(list.get(i).getObject().getAcclaimStatus());
                 }
 
                 imZan.setImageResource((isAcclaim != 0) ? R.drawable.zan_red : R.drawable.zan_grey);
-                tvZanNum.setText(articleAcclaimCount);
+                if (isAcclaim != 0){
+                    imZan.setTag("zan");
+                }else {
+                    imZan.setTag("un_zan");
+                }
+                tvZanNum.setText(articleAcclaimCount+"");
                 initRecyclerView();
             }
             if (((List) obj).get(0) instanceof UserTailBean) {
@@ -460,9 +471,9 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     @Override
     public void showError(String msg) {
         switch (WebPresenter.getRequireType()) {
-            case 3:
+            case 0:
                 initRecyclerView();
-                LogUtils.e(Constant.debugName + "type = " + 3, msg);
+                LogUtils.e(Constant.debugName + "type = " + 0, msg);
                 break;
             default:
                 LogUtils.e(Constant.debugName + "type = other", msg);

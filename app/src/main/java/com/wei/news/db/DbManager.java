@@ -9,9 +9,9 @@ import com.wei.news.dao.DaoSession;
 import org.greenrobot.greendao.database.Database;
 
 /**
- * 作者：赵若位
- * 时间：2018/5/6 10:13
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 10:13
+ * 邮箱：1760567382@qq.com
  * 功能：初始化数据库
  */
 

@@ -17,9 +17,9 @@ import com.wei.base.base.BasePresenter;
 import com.wei.base.utils.LogUtils;
 
 /**
- * 作者：赵若位
- * 时间：2018/5/4 12:16
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 12:16
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class WebViewActivity extends BaseActivity

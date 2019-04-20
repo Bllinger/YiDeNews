@@ -17,9 +17,9 @@ import com.wei.base.utils.LogUtils;
 import butterknife.ButterKnife;
 
 /**
- * 作者：赵若位
- * 时间：2018/3/24 22:16
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 22:16
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 
@@ -164,6 +164,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     {
         TextView view = getView(viewId);
         view.setTextColor(textColor);
+        LogUtils.d("Blinger____NewFragment","set color");
         return this;
     }
 
@@ -191,7 +192,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     public BaseViewHolder setVisible(@IdRes int viewId, boolean visible)
     {
         View view = getView(viewId);
-        view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
         return this;
     }
 

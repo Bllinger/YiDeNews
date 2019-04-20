@@ -61,15 +61,16 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 /**
- * 作者：赵若位
- * 时间：2018/8/2 17:03
- * 邮箱：1070138445@qq.com
+     * 作者：310Lab
+ * 时间：2019/4/2 17:03
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class SplashActivity extends BaseActivity<SplashPresenter> implements BaseView {
     private double latitude = 0.0;
     private double longitude = 0.0;
     public static String location;
+
 
 
     @Override
@@ -120,16 +121,19 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Bas
 
             LogUtils.d(Constant.debugName, "第一次进入");
             String uuid = UUID.randomUUID().toString();
+            int type = (int) (1 + Math.random() * (7 - 1 + 1));
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("firstStart", false);
             editor.putString("uuid", uuid);
             editor.putString("name",location);
+            editor.putInt("type",type);
             editor.apply();
 
             LogUtils.d(Constant.debugName, "firstStart:" + sharedPreferences.getBoolean("firstStart", true));
             LogUtils.d(Constant.debugName, "uuid:" + sharedPreferences.getString("uuid", ""));
+            LogUtils.d(Constant.debugName, "type:" + sharedPreferences.getInt("type", 0));
 
-            mPresenter.postNewUser(uuid, GainLocation.getAddress(this,latitude,longitude),(int) (1 + Math.random() * (7 - 1 + 1)));
+            mPresenter.postNewUser(uuid, location,type,latitude,longitude);
         }
 
 

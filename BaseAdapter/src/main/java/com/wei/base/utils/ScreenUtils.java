@@ -5,9 +5,9 @@ import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 /**
- * 作者：赵若位
- * 时间：2017/11/30
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1
+ * 邮箱：1760567382@qq.com
  * 功能：手机一些常用功能
  */
 

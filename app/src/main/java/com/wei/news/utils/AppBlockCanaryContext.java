@@ -10,9 +10,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * 作者：赵若位
- * 时间：2018/11/28 14:54
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/2 14:54
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class AppBlockCanaryContext extends BlockCanaryContext

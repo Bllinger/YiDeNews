@@ -13,9 +13,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
- * 作者：赵若位
- * 时间：2018/3/14 19:15
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 19:15
+ * 邮箱：1760567382@qq.com
  * 功能：文件操作工具类
  */
 

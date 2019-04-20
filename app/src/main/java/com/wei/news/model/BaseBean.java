@@ -3,9 +3,9 @@ package com.wei.news.model;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * 作者：赵若位
- * 时间：2018/8/1 22:57
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 22:57
+ * 邮箱：1760567382@qq.com
  * 功能：一级实体类
  */
 public class BaseBean<T>

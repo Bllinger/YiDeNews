@@ -5,9 +5,9 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * 作者：赵若位
- * 时间：2018/7/12 10:16
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 10:16
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class NetUtils

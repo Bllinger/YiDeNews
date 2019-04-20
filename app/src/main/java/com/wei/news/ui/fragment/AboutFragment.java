@@ -10,9 +10,9 @@ import android.widget.TextView;
 import com.wei.news.R;
 
 /**
- * 作者：赵若位
- * 时间：2018/8/6 22:58
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/6 22:58
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class AboutFragment extends DialogFragment

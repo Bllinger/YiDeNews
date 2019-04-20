@@ -28,9 +28,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 
 /**
- * 作者：赵若位
- * 时间：2018/7/31 21:00
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 21:00
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class App extends BaseApplication
@@ -42,6 +42,11 @@ public class App extends BaseApplication
 
     static
     {
+        ClassicsHeader.REFRESH_HEADER_PULLDOWN = "下拉推荐";
+        ClassicsHeader.REFRESH_HEADER_RELEASE = "释放推荐";
+        ClassicsHeader.REFRESH_HEADER_FINISH = "推荐完成";
+        ClassicsHeader.REFRESH_HEADER_REFRESHING = "正在推荐";
+
         //设置全局的Header构建器
         SmartRefreshLayout.setDefaultRefreshHeaderCreater(new DefaultRefreshHeaderCreater()
         {
@@ -51,7 +56,10 @@ public class App extends BaseApplication
                 //全局设置主题颜色
                 layout.setPrimaryColorsId(R.color.colorBG, R.color.colorEtHint);
                 //指定为经典Header，默认是 贝塞尔雷达Header
-                return new ClassicsHeader(context).setTimeFormat(new SimpleDateFormat());
+                ClassicsHeader classicsHeader = new ClassicsHeader(context);
+
+                return classicsHeader
+                        .setTimeFormat(new SimpleDateFormat());
             }
         });
         //设置全局的Footer构建器

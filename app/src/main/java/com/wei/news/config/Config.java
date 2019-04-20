@@ -1,16 +1,16 @@
 package com.wei.news.config;
 
 /**
- * 作者：赵若位
- * 时间：2018/8/1 11:25
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 11:25
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class Config
 {
     /*基地址*/
     public static final String BASE_URL = "http://v.juhe.cn";
-    public static final String BASE_URL_OTHER = "http://192.168.1.166:8080";
+    public static final String BASE_URL_OTHER = "http://106.13.137.157";
     /*新闻API KEY*/
     public static final String BASE_KEY = "fcc5fcdfc7aa29499b80109ee9c9613b";
     /*App延迟启动的时间*/

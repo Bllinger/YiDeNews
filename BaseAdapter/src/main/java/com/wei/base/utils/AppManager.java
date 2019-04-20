@@ -6,9 +6,9 @@ import java.util.Stack;
 
 
 /**
- * 作者：赵若位
- * 时间：2018/3/7 17:06
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 17:06
+ * 邮箱：1760567382@qq.com
  * 功能：Activity管理
  */
 public class AppManager

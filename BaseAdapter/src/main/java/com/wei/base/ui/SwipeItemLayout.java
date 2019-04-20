@@ -15,9 +15,9 @@ import android.view.animation.Interpolator;
 import android.widget.Scroller;
 
 /**
- * 作者：赵若位
- * 时间：2018/8/2 17:03
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 17:03
+ * 邮箱：1760567382@qq.com
  * 功能：新闻收藏页面
  */
 public class SwipeItemLayout extends ViewGroup

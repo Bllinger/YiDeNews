@@ -5,7 +5,7 @@ import com.wei.news.entity.Comment;
 public class CommentBean {
     private int status;
     private String info;
-    private Comment comment;
+    private Comment object;
 
     public int getStatus() {
         return status;
@@ -24,11 +24,13 @@ public class CommentBean {
     }
 
 
-    public Comment getComment() {
-        return comment;
+
+
+    public Comment getObject() {
+        return object;
     }
 
-    public void setComment(Comment comment) {
-        this.comment = comment;
+    public void setObject(Comment object) {
+        this.object = object;
     }
 }

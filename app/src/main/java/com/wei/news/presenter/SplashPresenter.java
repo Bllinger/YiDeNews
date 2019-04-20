@@ -20,10 +20,10 @@ public class SplashPresenter extends BasePresenter<BaseView>{
         super(view);
     }
 
-    public void postNewUser(String UID,String name,int imageType){
+    public void postNewUser(String UID,String name,int imageType,double latitude,double longitude){
         subscribe(
                 RetrofitManager.getManager().getRetrofit().create(ApiService.class)
-                        .postNewUser(UID,name,imageType),
+                        .postNewUser(UID,name,imageType,latitude,longitude),
                 new BaseObserver <List <UserInfoBean>>() {
                     @Override
                     public void onSuccess(List<UserInfoBean> userInfoBeans) {

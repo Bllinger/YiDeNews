@@ -11,9 +11,9 @@ import android.widget.TextView;
 import com.wei.base.R;
 
 /**
- * 作者：赵若位
- * 时间：2018/5/24 2:19
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 2:19
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 

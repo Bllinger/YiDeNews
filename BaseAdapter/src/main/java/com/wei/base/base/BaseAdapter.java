@@ -17,8 +17,8 @@ import java.util.List;
 
 /**
  * 作者：310 Group
- * 时间：2018/7/17 11:49
- * 邮箱：1070138445@qq.com
+ * 时间：2019/4/1 11:49
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder>
@@ -30,6 +30,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     private SparseArray<View> mFooteLayout = new SparseArray<>();
     private View mEmpty;
     private List<T> tempList;
+    private int myPosition;
 
 
     private static final int TYPE_HEADE = 10000;
@@ -45,6 +46,21 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         tempList = new ArrayList<>();
     }
 
+    public void setIndex(int position){
+        this.myPosition = position;
+    }
+    public List<T> getRecentNews(){
+        List<T> list = new ArrayList<>();
+        if (mList.size() < 1){
+            return new ArrayList<>();
+        }else if (mList.size() > 30){
+            list.addAll(this.mList.subList(0,30));
+        }else {
+            list.addAll(this.mList.subList(0,mList.size()));
+        }
+
+        return list;
+    }
 
     public List<T> getData()
     {

@@ -38,9 +38,9 @@ import java.util.Map;
 import butterknife.Bind;
 
 /**
- * 作者：赵若位
- * 时间：2018/7/31 21:16
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 21:16
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class MainActivity extends BaseActivity
@@ -229,8 +229,6 @@ public class MainActivity extends BaseActivity
                         AboutFragment about = new AboutFragment();
                         about.show(getSupportFragmentManager(), AboutFragment.class.getSimpleName());
                         break;
-                    case R.id.menu_theme:
-                        LogUtils.d(Constant.debugName+"MainActivity","click theme");
                     default:
                         break;
                 }
@@ -255,7 +253,7 @@ public class MainActivity extends BaseActivity
         if (fragment == null)
         {
             NewTypeBean data = NewTypeBean.getNewTypeBean(s);
-            fragment = NewFragment.getFragment(data);
+            fragment = NewFragment.getFragment(data,s);
             fragments.put(s, fragment);
             ft.add(R.id.frame, fragment);
         } else

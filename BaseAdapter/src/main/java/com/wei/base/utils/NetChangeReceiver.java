@@ -8,9 +8,9 @@ import android.net.ConnectivityManager;
 import com.wei.base.utils.NetUtils;
 
 /**
- * 作者：赵若位
- * 时间：2018/7/12 9:45
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 9:45
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class NetChangeReceiver extends BroadcastReceiver

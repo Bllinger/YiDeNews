@@ -12,9 +12,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 作者：赵若位
- * 时间：2017/11/28
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 

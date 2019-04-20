@@ -17,9 +17,9 @@ import org.greenrobot.greendao.annotation.Id;
 import java.util.List;
 
 /**
- * 作者：赵若位
- * 时间：2018/8/2 13:55
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/2 13:55
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 @Entity

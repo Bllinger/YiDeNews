@@ -16,9 +16,9 @@ import java.util.List;
 import io.reactivex.disposables.Disposable;
 
 /**
- * 作者：赵若位
- * 时间：2018/8/1 23:08
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1 23:08
+ * 邮箱：1760567382@qq.com
  * 功能：
  */
 public class NewPresenter extends BasePresenter<BaseView>
@@ -31,7 +31,7 @@ public class NewPresenter extends BasePresenter<BaseView>
 
     public void getNewsList(String type,String userId)
     {
-        LogUtils.d(Constant.debugName+"NewPresenter   ",type);
+        //LogUtils.d(Constant.debugName+"NewPresenter   ",type);
         if ("top".equals(type)){
             subscribe(
                     RetrofitManager.getManager().getRetrofit().create(ApiService.class)

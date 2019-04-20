@@ -9,9 +9,9 @@ import android.graphics.Paint;
 import com.squareup.picasso.Transformation;
 
 /**
- * 作者：赵若位
- * 时间：2017/11/8
- * 邮箱：1070138445@qq.com
+ * 作者：310Lab
+ * 时间：2019/4/1
+ * 邮箱：1760567382@qq.com
  * 功能：Picasso原型图片
  */
 
