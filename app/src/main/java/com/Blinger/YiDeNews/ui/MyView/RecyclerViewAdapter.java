@@ -27,8 +27,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         private List<Integer> acclaimNumList;
         private List<String> reviewContentList;
         private List<Integer> statusList;
+    private List<String> commentIdList;
 
-        public RecyclerViewAdapter(Context context, List<String> userNameList, List<String> timeList,List<Integer> acclaimNumList,List<String> reviewContentList,List<Integer> statusList,List<Integer> headImgTypeList
+    public RecyclerViewAdapter(Context context, List<String> userNameList, List<String> timeList, List<Integer> acclaimNumList, List<String> reviewContentList, List<Integer> statusList, List<Integer> headImgTypeList, List<String> commentIdList
                 ) {
             this.context = context;
 
@@ -39,6 +40,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             this.acclaimNumList = acclaimNumList;
             this.reviewContentList = reviewContentList;
             this.statusList = statusList;
+        this.commentIdList = commentIdList;
 
             LogUtils.d(Constant.debugName+"recycler"," into construct function of RecyclerViewAdapter");
         }
@@ -137,7 +139,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         }
 
     //新增评论
-    public void addData(int position,String username,String date,int acclaimNum, String reviewContent,int status,int imageType) {
+    public void addData(int position, String username, String date, int acclaimNum, String reviewContent, int status, int imageType, String commentId) {
         //mDatas.add(position, "Insert " + position);
 
         userNameList.add(position,username);
@@ -146,6 +148,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         reviewContentList.add(position,reviewContent);
         statusList.add(position,status);
         headImgTypeList.add(position,imageType);
+        commentIdList.add(position, commentId);
+
         LogUtils.d(Constant.debugName+"WebActivity list size",acclaimNumList.size()+"");
 
         notifyItemInserted(position);

@@ -114,6 +114,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     private List<String> reviewContentList;
     private List<Integer> imageTypeList;
     private List<Integer> statusList;
+    private List<String> commentIdList;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -277,7 +278,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     }
 
     private void initRecyclerView() {
-        mRecyclerViewAdapter = new RecyclerViewAdapter(BaseApplication.getContext(), userNameList, timeList, acclaimNumList, reviewContentList, statusList, imageTypeList);//需要修改
+        mRecyclerViewAdapter = new RecyclerViewAdapter(BaseApplication.getContext(), userNameList, timeList, acclaimNumList, reviewContentList, statusList, imageTypeList, commentIdList);//需要修改
         rvReview.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -291,13 +292,13 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
 //                            LogUtils.d(Constant.debugName + "WebActivity position", position + "");
                             mRecyclerViewAdapter.addAcclaimNum(position);
 
-                            mPresenter.postAcclaim(reviewId, uuid, 0, 1);//评论点赞+1
+                            mPresenter.postAcclaim(commentIdList.get(position), uuid, 0, 1);//评论点赞+1
                         } else {
                             imageView.setTag("un_acclaim");
                             imageView.setImageResource(R.drawable.zan_grey);
                             mRecyclerViewAdapter.decideAcclaimNum(position);
                             // LogUtils.d(Constant.debugName+"position",position+"");
-                            mPresenter.postAcclaim(reviewId, uuid, 0, -1);//评论点赞-1
+                            mPresenter.postAcclaim(commentIdList.get(position), uuid, 0, -1);//评论点赞-1
                         }
                         break;
                 }
@@ -306,8 +307,8 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     }
 
     private void newReview(String reviewContent) {
-        mRecyclerViewAdapter.addData(userNameList.size(), location, TimeUtils.getTime() + "", 0, reviewContent, 0, imageType);
         reviewId = Md5.md5(reviewContent + TimeUtils.getTime() + uuid, "hello 310 lab");
+        mRecyclerViewAdapter.addData(userNameList.size(), location, TimeUtils.getTime() + "", 0, reviewContent, 0, imageType, reviewId);
 
         //Long newsId,Long reviewId,String reviewType,String reviewContent,String UID
         mPresenter.postReview(mData.getUniquekey(), reviewId, "1", reviewContent, uuid, TimeUtils.getTime());
@@ -336,6 +337,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         reviewContentList = new ArrayList<>();
         imageTypeList = new ArrayList<>();
         statusList = new ArrayList<>();
+        commentIdList = new ArrayList<>();
     }
 
     @Override
@@ -517,6 +519,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                     acclaimNumList.add(list.get(i).getObject().getAcclaimCount());//评论点赞数
                     reviewContentList.add(list.get(i).getObject().getContent());
                     imageTypeList.add(list.get(i).getObject().getImageType());
+                    commentIdList.add(list.get(i).getObject().getComment_unique_key());
                     // LogUtils.d(Constant.debugName+"WebActivity   ",imageTypeList.get(0)+"");
                     statusList.add(list.get(i).getObject().getAcclaimStatus());
                 }

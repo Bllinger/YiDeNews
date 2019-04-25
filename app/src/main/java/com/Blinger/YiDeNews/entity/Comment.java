@@ -9,6 +9,7 @@ public class Comment {
     private String commentTime;
     private int imageType;
     private Long commentCount;
+    private String comment_unique_key;
     private String content;
     private int acclaimCount;
     private int acclaimStatus;
@@ -67,5 +68,13 @@ public class Comment {
 
     public void setAcclaimStatus(int acclaimStatus) {
         this.acclaimStatus = acclaimStatus;
+    }
+
+    public String getComment_unique_key() {
+        return comment_unique_key;
+    }
+
+    public void setComment_unique_key(String comment_unique_key) {
+        this.comment_unique_key = comment_unique_key;
     }
 }
