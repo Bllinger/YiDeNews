@@ -37,14 +37,14 @@ public class WebPresenter extends BasePresenter<BaseView>{
                 new BaseObserver<List<UserTailBean>>() {
                     @Override
                     public void onSuccess(List<UserTailBean> userTailBean) {
-                        LogUtils.d(Constant.debugName,"into success");
+                        //LogUtils.d(Constant.debugName,"into success");
                         //LogUtils.d(Constant.debugName,userTailBean.get(0).getInfo()+"success");
                         mView.showData(userTailBean.get(0));
                     }
 
                     @Override
                     public void onFailed(String msg) {
-                        LogUtils.d(Constant.debugName,msg+" failed");
+                        //LogUtils.d(Constant.debugName,msg+" failed");
                         requireType = 0;
                         mView.showError(msg);
                     }
@@ -65,13 +65,13 @@ public class WebPresenter extends BasePresenter<BaseView>{
                 new BaseObserver<List<UserTailBean>>() {
                     @Override
                     public void onSuccess(List<UserTailBean> userTailBeans) {
-                        LogUtils.d(Constant.debugName+"postReview","into success");
+                        //LogUtils.d(Constant.debugName+"postReview","into success");
                         mView.showData(userTailBeans);
                     }
 
                     @Override
                     public void onFailed(String msg) {
-                        LogUtils.d(Constant.debugName+"postReview","into failue");
+                        //LogUtils.d(Constant.debugName+"postReview","into failue");
                         requireType = 1;
                         mView.showError(msg);
                     }
@@ -91,13 +91,13 @@ public class WebPresenter extends BasePresenter<BaseView>{
                 new BaseObserver<List<CommentBean>>() {
                     @Override
                     public void onSuccess(List<CommentBean> commentBeans) {
-                        LogUtils.d(Constant.debugName+"getReviewList","into success");
+                        //LogUtils.d(Constant.debugName+"getReviewList","into success");
                         mView.showData(commentBeans);
                     }
 
                     @Override
                     public void onFailed(String msg) {
-                        LogUtils.d(Constant.debugName+"getReviewList","into failue");
+                        //LogUtils.d(Constant.debugName+"getReviewList","into failue");
                         requireType = 2;
                         mView.showError(msg);
                     }

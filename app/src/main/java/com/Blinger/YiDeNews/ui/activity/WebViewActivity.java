@@ -1,6 +1,7 @@
 package com.Blinger.YiDeNews.ui.activity;
 
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -17,30 +18,33 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.tencent.smtt.sdk.WebSettings;
-import com.tencent.smtt.sdk.WebView;
-import com.tencent.smtt.sdk.WebViewClient;
+import com.Blinger.YiDeNews.App;
+import com.Blinger.YiDeNews.R;
+import com.Blinger.YiDeNews.config.Constant;
+import com.Blinger.YiDeNews.dao.HistoryBeanDao;
+import com.Blinger.YiDeNews.dao.NewBeanDao;
+import com.Blinger.YiDeNews.entity.UserTail;
+import com.Blinger.YiDeNews.model.BaseBean;
+import com.Blinger.YiDeNews.model.CommentBean;
+import com.Blinger.YiDeNews.model.HistoryBean;
+import com.Blinger.YiDeNews.model.NewBean;
+import com.Blinger.YiDeNews.model.UserTailBean;
+import com.Blinger.YiDeNews.presenter.WebPresenter;
+import com.Blinger.YiDeNews.ui.MyView.AdjustTypeDialog;
+import com.Blinger.YiDeNews.ui.MyView.InputTextMsgDialog;
+import com.Blinger.YiDeNews.ui.MyView.RecyclerViewAdapter;
+import com.Blinger.YiDeNews.utils.Md5;
+import com.Blinger.YiDeNews.utils.ObservableScrollView;
+import com.Blinger.YiDeNews.utils.ToastUtil;
 import com.Blinger.base.BaseApplication;
 import com.Blinger.base.base.BaseActivity;
 import com.Blinger.base.base.BaseView;
 import com.Blinger.base.utils.DialogUtils;
 import com.Blinger.base.utils.LogUtils;
 import com.Blinger.base.utils.TimeUtils;
-import com.Blinger.YiDeNews.App;
-import com.Blinger.YiDeNews.R;
-import com.Blinger.YiDeNews.config.Constant;
-import com.Blinger.YiDeNews.dao.NewBeanDao;
-import com.Blinger.YiDeNews.entity.UserTail;
-import com.Blinger.YiDeNews.model.BaseBean;
-import com.Blinger.YiDeNews.model.CommentBean;
-import com.Blinger.YiDeNews.model.NewBean;
-import com.Blinger.YiDeNews.model.UserTailBean;
-import com.Blinger.YiDeNews.presenter.WebPresenter;
-import com.Blinger.YiDeNews.ui.MyView.InputTextMsgDialog;
-import com.Blinger.YiDeNews.ui.MyView.RecyclerViewAdapter;
-import com.Blinger.YiDeNews.utils.Md5;
-import com.Blinger.YiDeNews.utils.ObservableScrollView;
-import com.Blinger.YiDeNews.utils.ToastUtil;
+import com.tencent.smtt.sdk.WebSettings;
+import com.tencent.smtt.sdk.WebView;
+import com.tencent.smtt.sdk.WebViewClient;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -50,6 +54,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -91,6 +96,8 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     ImageView shareIv;
     @Bind(R.id.empty)
     View empty;
+    @Bind(R.id.adjust_type_iv)
+    ImageView adjustTypeIv;
 
 
     private WebView mWebView;
@@ -98,6 +105,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     private UserTail mUserTail;
     private String uuid;
     private InputTextMsgDialog inputTextMsgDialog;
+    private AdjustTypeDialog adjustTypeDialog;
     //private RvAdapter mAdapter;
 
     private List<String> userNameList;
@@ -106,11 +114,15 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     private List<String> reviewContentList;
     private List<Integer> imageTypeList;
     private List<Integer> statusList;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
 
     private RecyclerViewAdapter mRecyclerViewAdapter;
     private String reviewId;
     private String location;
     private int imageType;
+    private int typeSize;
+    private WebSettings webSettings;
 
     private Long commentCount = 0l;//新闻评论数
     private int articleAcclaimCount = 0;//新闻获赞个数
@@ -127,6 +139,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         return R.layout.activity_web;
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
@@ -157,11 +170,12 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
             @Override
             public void onTextSend(String msg) {
                 //处理输入文字
-                LogUtils.d(Constant.debugName + "评论", msg);
+//                LogUtils.d(Constant.debugName + "评论", msg);
                 newReview(msg);
                 inputTextMsgDialog.dismiss();
             }
         });
+
 
         rvReview.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         //initRecyclerView();//初始化recyclerview
@@ -194,12 +208,14 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                 return true;
             }
         });
-        mWebView.loadUrl(mData.getUrl());
+
 
         //声明WebSettings子类
-        WebSettings webSettings = mWebView.getSettings();
+        webSettings = mWebView.getSettings();
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(false);
+
+        webSettings.setDomStorageEnabled(true);
         //设置自适应屏幕，两者合用（下面这两个方法合用）
         //将图片调整到适合webview的大小
         webSettings.setUseWideViewPort(true);
@@ -220,16 +236,48 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         //支持自动加载图片
         webSettings.setLoadsImagesAutomatically(true);
+        //webSettings.setTextZoom(100);
+        //webSettings.setTextSize(WebSettings.TextSize.SMALLEST);
+        setType(typeSize);
         //设置编码格式
         webSettings.setDefaultTextEncodingName("utf-8");
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         mWebView.getSettings().setDomStorageEnabled(true);
 
+        adjustTypeDialog = new AdjustTypeDialog(this, R.style.dialog_center, typeSize);
+        adjustTypeDialog.setOnAdjustTypeListener(new AdjustTypeDialog.OnAdjustTypeListener() {
+            @Override
+            public void onAdjustType(int type) {
+                setType(type);
+                typeSize = type;
+                editor.putInt("typeSize", type);
+                editor.apply();
+            }
+        });
+
+        mWebView.loadUrl(mData.getUrl());
         time();
     }
 
+    private void setType(int type) {
+        switch (type) {
+            case 1:
+                webSettings.setTextSize(WebSettings.TextSize.SMALLER);
+                break;
+            case 2:
+                webSettings.setTextSize(WebSettings.TextSize.NORMAL);
+                break;
+            case 3:
+                webSettings.setTextSize(WebSettings.TextSize.LARGER);
+                break;
+            case 4:
+                webSettings.setTextSize(WebSettings.TextSize.LARGEST);
+                break;
+        }
+    }
+
     private void initRecyclerView() {
-        mRecyclerViewAdapter = new RecyclerViewAdapter(BaseApplication.getContext(), userNameList, timeList, acclaimNumList, reviewContentList, statusList,imageTypeList);//需要修改
+        mRecyclerViewAdapter = new RecyclerViewAdapter(BaseApplication.getContext(), userNameList, timeList, acclaimNumList, reviewContentList, statusList, imageTypeList);//需要修改
         rvReview.setAdapter(mRecyclerViewAdapter);
         mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnRecyclerViewItemClickListener() {
             @Override
@@ -240,7 +288,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                         if (imageView.getTag().equals("un_acclaim")) {
                             imageView.setTag("acclaim");
                             imageView.setImageResource(R.drawable.zan_red);
-                            LogUtils.d(Constant.debugName+"WebActivity position",position+"");
+//                            LogUtils.d(Constant.debugName + "WebActivity position", position + "");
                             mRecyclerViewAdapter.addAcclaimNum(position);
 
                             mPresenter.postAcclaim(reviewId, uuid, 0, 1);//评论点赞+1
@@ -258,7 +306,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
     }
 
     private void newReview(String reviewContent) {
-        mRecyclerViewAdapter.addData(userNameList.size(), location, TimeUtils.getTime() + "", 0, reviewContent, 0,imageType);
+        mRecyclerViewAdapter.addData(userNameList.size(), location, TimeUtils.getTime() + "", 0, reviewContent, 0, imageType);
         reviewId = Md5.md5(reviewContent + TimeUtils.getTime() + uuid, "hello 310 lab");
 
         //Long newsId,Long reviewId,String reviewType,String reviewContent,String UID
@@ -310,13 +358,16 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");// HH:mm:ss
         Date date = new Date(System.currentTimeMillis());
 
-        SharedPreferences sharedPreferences = getSharedPreferences("init", MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("init", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+
         uuid = sharedPreferences.getString("uuid", "");
         location = sharedPreferences.getString("name", "");
-        imageType = sharedPreferences.getInt("type",0);
-        LogUtils.d(Constant.debugName, "UUID:" + uuid);
-        LogUtils.d(Constant.debugName, "Location:" + location);
-        LogUtils.d(Constant.debugName, "imageType" + imageType);
+        imageType = sharedPreferences.getInt("type", 0);
+        typeSize = sharedPreferences.getInt("typeSize", 2);
+        //LogUtils.d(Constant.debugName, "UUID:" + uuid);
+        //LogUtils.d(Constant.debugName, "Location:" + location);
+        //LogUtils.d(Constant.debugName, "imageType" + imageType);
 
         //取得信息处
         mUserTail.setScanTime(simpleDateFormat.format(date));
@@ -326,11 +377,28 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         mUserTail.setUserId(uuid);
         mUserTail.setNewsUrl(mData.getUrl());
         ///LogUtils.d(Constant.debugName+ " userTail   ",mUserTail.getUserId(), mUserTail.getNewsId(), mUserTail.getNewsTitle(), mUserTail.getNewsType(), mUserTail.getScanTime(), mUserTail.getNewsUrl());
+        appendHistory(mData);
         mPresenter.postHistory(mUserTail.getUserId(), mUserTail.getNewsId(), mUserTail.getNewsTitle(), mUserTail.getNewsType(), mUserTail.getScanTime(), mUserTail.getNewsUrl());//需要修改
-        mPresenter.getReviewList(mData.getUniquekey(),uuid);//获取评论
+        mPresenter.getReviewList(mData.getUniquekey(), uuid);//获取评论
     }
 
-    @OnClick({R.id.img_finish, R.id.img_collection, R.id.im_zan, R.id.rl_rv, R.id.rv_button,R.id.share_iv})
+    //将历史记录保存到数据库
+    private void appendHistory(NewBean mData) {
+        HistoryBeanDao dao = App.mSession.getHistoryBeanDao();
+        HistoryBean historyBean = new HistoryBean();
+
+        historyBean.setAuthorName(mData.getAuthorName());
+        historyBean.setCategory(mData.getCategory());
+        historyBean.setDate(mData.getDate());
+        historyBean.setTitle(mData.getTitle());
+        historyBean.setUniquekey(mData.getUniquekey());
+        historyBean.setUrl(mData.getUrl());
+        historyBean.setThumbnailPicS(mData.getThumbnailPicS());
+
+        dao.insert(historyBean);
+    }
+
+    @OnClick({R.id.img_finish, R.id.img_collection, R.id.im_zan, R.id.rl_rv, R.id.rv_button, R.id.share_iv, R.id.adjust_type_iv})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.img_finish:
@@ -360,16 +428,18 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
             case R.id.rl_rv:
                 inputTextMsgDialog.show();
                 break;
+            case R.id.adjust_type_iv:
+                adjustTypeDialog.show();
+                break;
             case R.id.share_iv:
                 //获取剪贴版
-                ClipboardManager clipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("simple text", mData.getUrl());
 
-                if (clip != null){
+                if (clip != null) {
                     clipboard.setPrimaryClip(clip);
-                    ToastUtil.getInstance().showSuccess(App.getContext(),"复制分享链接成功");
+                    ToastUtil.getInstance().showSuccess(App.getContext(), "复制分享链接成功");
                 }
-
 
 
                 break;
@@ -412,12 +482,12 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                                 if (aBoolean) {
                                     dao.delete(mData);
 
-                                    LogUtils.d(Constant.debugName + " collect", "取消收藏");
+//                                    LogUtils.d(Constant.debugName + " collect", "取消收藏");
                                     mPresenter.postCollect(mData.getUniquekey(), uuid, -1);
 
                                 } else {
                                     dao.insert(mData);
-                                    LogUtils.d(Constant.debugName + " collect", "收藏");
+//                                    LogUtils.d(Constant.debugName + " collect", "收藏");
                                     mPresenter.postCollect(mData.getUniquekey(), uuid, 1);
                                 }
                                 //是否被收藏
@@ -447,22 +517,22 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                     acclaimNumList.add(list.get(i).getObject().getAcclaimCount());//评论点赞数
                     reviewContentList.add(list.get(i).getObject().getContent());
                     imageTypeList.add(list.get(i).getObject().getImageType());
-                   // LogUtils.d(Constant.debugName+"WebActivity   ",imageTypeList.get(0)+"");
+                    // LogUtils.d(Constant.debugName+"WebActivity   ",imageTypeList.get(0)+"");
                     statusList.add(list.get(i).getObject().getAcclaimStatus());
                 }
 
                 imZan.setImageResource((isAcclaim != 0) ? R.drawable.zan_red : R.drawable.zan_grey);
-                if (isAcclaim != 0){
+                if (isAcclaim != 0) {
                     imZan.setTag("zan");
-                }else {
+                } else {
                     imZan.setTag("un_zan");
                 }
-                tvZanNum.setText(articleAcclaimCount+"");
+                tvZanNum.setText(articleAcclaimCount + "赞");
                 initRecyclerView();
             }
             if (((List) obj).get(0) instanceof UserTailBean) {
                 List<UserTailBean> list = (List<UserTailBean>) obj;
-                LogUtils.d(Constant.debugName, list.get(0).getInfo());
+//                LogUtils.d(Constant.debugName, list.get(0).getInfo());
             }
         }
     }
@@ -472,10 +542,10 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         switch (WebPresenter.getRequireType()) {
             case 0:
                 initRecyclerView();
-                LogUtils.e(Constant.debugName + "type = " + 0, msg);
+//                LogUtils.e(Constant.debugName + "type = " + 0, msg);
                 break;
             default:
-                LogUtils.e(Constant.debugName + "type = other", msg);
+//                LogUtils.e(Constant.debugName + "type = other", msg);
                 break;
         }
     }

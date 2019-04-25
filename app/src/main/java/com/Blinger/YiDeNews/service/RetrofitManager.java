@@ -259,7 +259,7 @@ public class RetrofitManager
                         .build();
                 //重建这个request，通过builder.url(newFullUrl).build()；
                 // 然后返回一个response至此结束修改
-                Log.d(Constant.debugName, "intercept: " + newFullUrl.toString());
+                LogUtils.d(Constant.debugName, "intercept: " + newFullUrl.toString());
                 return chain.proceed(builder.url(newFullUrl).build());
             }
             return chain.proceed(request);

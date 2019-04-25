@@ -10,7 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_120"
         android:background="@drawable/selector_bg">
-        <ImageView
+
+        <com.Blinger.YiDeNews.ui.MyView.RoundImageView
             android:id="@+id/item_img"
             android:layout_width="@dimen/dp_110"
             android:layout_height="@dimen/dp_73"
@@ -129,8 +130,7 @@
             android:gravity="center"
             android:text="~已经到底了~"
             android:textColor="@color/colorTime"
-            android:textSize="13sp"
-           />
+            android:textSize="13sp" />
 
     </RelativeLayout>
 </RelativeLayout>

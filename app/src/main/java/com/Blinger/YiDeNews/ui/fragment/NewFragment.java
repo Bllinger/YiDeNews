@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Blinger.base.BaseApplication;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.Blinger.base.base.BaseAdapter;
@@ -66,7 +67,7 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
     private boolean isShow = true;
     private int disy = 0;
     private boolean isFirstRequest = false;
-    private static String category;
+    private String category;
     private int newSignPosition;
     private int isRequest = 0;
     private int isVisible = 10000000;
@@ -80,7 +81,7 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
         Bundle bundle = new Bundle();
         bundle.putParcelable(NewFragment.class.getSimpleName(), data);
         fragment.setArguments(bundle);
-        category = str;
+        //category = str;
         return fragment;
     }
 
@@ -101,6 +102,7 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
 
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("init", MODE_PRIVATE);
         uuid = sharedPreferences.getString("uuid", "");
+
         isFirstRequest = true;
         newSignPosition = 10000000;
         myPosition.add(-1);
@@ -173,6 +175,8 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
 
         setRefreshListener();
         mData = getArguments().getParcelable(NewFragment.class.getSimpleName());
+//        LogUtils.d(Constant.debugName+"NewFragment","进入initView"+mData.getTitle());
+        category = mData.getTitle();
         isUIVisible = true;
 
     }
@@ -194,7 +198,11 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
     private void setRefreshListener() {
         mRefresh.setOnRefreshListener(refresh -> {
             //isRequest = true;
-            initData();
+            if (BaseApplication.isIsNetConnect()) {
+                netWork();
+            } else {
+                alert(getString(com.Blinger.base.R.string.alert_no_net_repeat));
+            }
             mRefresh.finishRefresh(Config.SMARTREFRESH_MAX_REFRESH_TIME);
         });
         mRefresh.setEnableLoadmore(false);
@@ -221,7 +229,7 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
         if (recentNewsBeans == null) {
             recentNewsBeans = new ArrayList<>();
         }
-
+//        LogUtils.d(Constant.debugName+"NewFragment","into getRecentNewsList"+recentNewsBeans.size()+mData.getTitle() );
         //LogUtils.d(Constant.debugName + "getRecentNewsList   ", recentNewsBeans.size() + "");
         List<NewBean> newBeans = new ArrayList<>();
 
@@ -245,12 +253,16 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
     private void setRecentNewsList(List<NewBean> list) {
         RecentNewsBeanDao dao = App.mSession.getRecentNewsBeanDao();
         List<RecentNewsBean> tempList = dao.queryBuilder().where(RecentNewsBeanDao.Properties.Category.eq(category)).list();
+//
+//        for (int i=0; i<tempList.size();i++){
+//            LogUtils.d(Constant.debugName+"newFragment","tempList" + tempList.get(i).getTitle()+"   type   "+mData.getTitle()+i);
+//        }
 
         if (tempList != null) {
             dao.deleteInTx(tempList);
         }
 
-        LogUtils.d(Constant.debugName + "setRecentNewsList   ", (list.size()) + "条");
+        //LogUtils.d(Constant.debugName + "setRecentNewsList   ", (list.size()) + "条");
         for (int i = 0; i < list.size(); i++) {
             RecentNewsBean recentNewsBean = new RecentNewsBean();
 
@@ -268,7 +280,7 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
             dao.insert(recentNewsBean);
         }
 
-        LogUtils.d(Constant.debugName + "setRecentNewsList   ", "保存成功");
+//        LogUtils.d(Constant.debugName + "NewFragment   ", "保存成功"+list.size()+mData.getTitle());
     }
 
     @Override
@@ -276,6 +288,8 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
         if (obj instanceof List) {
             if (((List) obj).size() == 0) {
                 if (isFirstRequest) {
+                    //isFirstRequest = false;
+//                    LogUtils.d(Constant.debugName + "NewFragment   ", "into isFirstRequest");
                     mAdapter.setData(getRecentNewsList());
                 } else {
                     if (mRefresh.isRefreshing()) {
@@ -286,23 +300,25 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
             } else {
                 if (((List) obj).get(0) instanceof NewBean) {
                     List<NewBean> list = (List<NewBean>) obj;
-                    LogUtils.d(Constant.debugName + "NewFragment   ", list.size() + "");
+//                    LogUtils.d(Constant.debugName + "NewFragment   ", list.size() + "");
                     mAdapter.setData(list);
                     if (mRefresh.isRefreshing()) {
                         mRefresh.finishRefresh();
                         //ToastUtil.getInstance().showSuccess(App.getContext(), "数据刷新成功");
                         //isRequest = false;
-                        isFirstRequest = false;
+
+//                        LogUtils.d(Constant.debugName + "NewFragment   ", mData.getTitle()+"  "+isFirstRequest);
                         isRequest = 1;
                         newSignPosition += list.size();
                         isVisible = newSignPosition;
                         firstClick = true;
                         addSize(list.size());
                     }
+                    isFirstRequest = false;
                     showToast(list.size());
                 } else if (((List) obj).get(0) instanceof UserInfoBean) {
                     List<UserInfoBean> list = (List<UserInfoBean>) obj;
-                    LogUtils.d(Constant.debugName + "postEnjoy", list.get(0).getInfo());
+//                    LogUtils.d(Constant.debugName + "postEnjoy", list.get(0).getInfo());
                     ToastUtil.getInstance().showSuccess(App.getContext(), "反馈成功");
                 }
             }
@@ -325,6 +341,7 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
     @Override
     public void onDestroyView() {
         setRecentNewsList(mAdapter.getRecentNews());
+//        LogUtils.d(Constant.debugName+"NewFragment","into destroyView"+mData.getTitle());
         //mAdapter.getRecentNews();
         super.onDestroyView();
         ButterKnife.unbind(this);

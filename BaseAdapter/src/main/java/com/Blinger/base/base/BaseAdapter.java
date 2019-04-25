@@ -73,7 +73,7 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
             this.mList.clear();
             this.mList.addAll(list == null ? new ArrayList<T>() : list);
             this.mList.addAll(tempList);
-            LogUtils.d("Blinger list size    ",this.mList.size()+"");
+            //LogUtils.d("Blinger list size    ",this.mList.size()+"");
             tempList.clear();
             notifyDataSetChanged();
         }else {

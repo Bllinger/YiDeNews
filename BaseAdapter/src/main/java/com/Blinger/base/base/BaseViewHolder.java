@@ -164,7 +164,7 @@ public class BaseViewHolder extends RecyclerView.ViewHolder
     {
         TextView view = getView(viewId);
         view.setTextColor(textColor);
-        LogUtils.d("Blinger____NewFragment","set color");
+        //LogUtils.d("Blinger____NewFragment","set color");
         return this;
     }
 

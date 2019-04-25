@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
-import com.orhanobut.logger.Logger;
+
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -45,7 +45,7 @@ public class FileUtils
             } catch (IOException e)
             {
                 e.printStackTrace();
-                Logger.e(e.getMessage());
+                LogUtils.e(e.getMessage());
             }
         }
         return file;

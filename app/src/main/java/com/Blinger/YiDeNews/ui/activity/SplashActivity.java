@@ -67,6 +67,10 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Bas
     private double latitude = 0.0;
     private double longitude = 0.0;
     public static String location;
+    private String uuid;
+    private int type;
+    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPreferences;
 
 
 
@@ -85,6 +89,8 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Bas
 
         super.initView(savedInstanceState);
         //关闭导航栏
+        sharedPreferences = getSharedPreferences("init", MODE_PRIVATE);
+        editor = sharedPreferences.edit();
         final View decorView = getWindow().getDecorView();
         final int uiOption = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -100,35 +106,33 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Bas
                         delay();
                     }
                 });
-    }
 
+    }
 
     /*延迟启动App*/
     private void delay() {
-        SharedPreferences sharedPreferences = getSharedPreferences("init", MODE_PRIVATE);
-
         boolean isFirstStart = sharedPreferences.getBoolean("firstStart", true);
-        LogUtils.d(Constant.debugName, "" + isFirstStart);
-
+//        LogUtils.d(Constant.debugName, "" + isFirstStart);
 
         if (isFirstStart) {
             gainLatitudeLongitude();
             location = StringUtils.splitString(GainLocation.getAddress(this,latitude,longitude))+"的网友";
-            LogUtils.d(Constant.debugName+"位置",location);
+//            LogUtils.d(Constant.debugName+"位置",location);
+//
+//            LogUtils.d(Constant.debugName, "第一次进入");
+            uuid = UUID.randomUUID().toString();
+            type = (int) (1 + Math.random() * (7 - 1 + 1));
 
-            LogUtils.d(Constant.debugName, "第一次进入");
-            String uuid = UUID.randomUUID().toString();
-            int type = (int) (1 + Math.random() * (7 - 1 + 1));
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("firstStart", false);
+            //editor.putBoolean("firstStart", false);
             editor.putString("uuid", uuid);
             editor.putString("name",location);
             editor.putInt("type",type);
-            editor.apply();
+            editor.putInt("typeSize", 2);
 
-            LogUtils.d(Constant.debugName, "firstStart:" + sharedPreferences.getBoolean("firstStart", true));
-            LogUtils.d(Constant.debugName, "uuid:" + sharedPreferences.getString("uuid", ""));
-            LogUtils.d(Constant.debugName, "type:" + sharedPreferences.getInt("type", 0));
+
+//            LogUtils.d(Constant.debugName, "firstStart:" + sharedPreferences.getBoolean("firstStart", true));
+//            LogUtils.d(Constant.debugName, "uuid:" + sharedPreferences.getString("uuid", ""));
+//            LogUtils.d(Constant.debugName, "type:" + sharedPreferences.getInt("type", 0));
 
             mPresenter.postNewUser(uuid, location,type,latitude,longitude);
         }
@@ -219,7 +223,9 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Bas
     public void showData(Object obj) {
         if (obj instanceof List){
             List<UserInfoBean> list = (List<UserInfoBean>) obj;
-            LogUtils.d(Constant.debugName,list.get(0).getInfo());
+//            LogUtils.d(Constant.debugName + "register",list.get(0).getInfo());
+            editor.putBoolean("firstStart", false);
+            editor.apply();
         }
     }
 

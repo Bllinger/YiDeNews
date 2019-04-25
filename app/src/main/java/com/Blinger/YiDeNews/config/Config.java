@@ -11,6 +11,7 @@ public class Config
     /*基地址*/
     public static final String BASE_URL = "http://v.juhe.cn";
     public static final String BASE_URL_OTHER = "http://106.13.137.157";
+    //    public static final String BASE_URL_OTHER = "http://192.168.1.166:8080";
     /*新闻API KEY*/
     public static final String BASE_KEY = "fcc5fcdfc7aa29499b80109ee9c9613b";
     /*App延迟启动的时间*/

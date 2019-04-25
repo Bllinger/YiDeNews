@@ -1,6 +1,7 @@
 package com.Blinger.YiDeNews.db;
 
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 
 import com.Blinger.YiDeNews.dao.DaoMaster;
@@ -44,7 +45,7 @@ public class DbManager
     public DaoSession initialization(Context context)
     {
         DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(context, context.getPackageName() + ".db", null);
-        Database db = helper.getEncryptedWritableDb(context.getPackageName());
+        SQLiteDatabase db = helper.getWritableDatabase();
         mSession = new DaoMaster(db).newSession();
         mSession.clear();
         return mSession;

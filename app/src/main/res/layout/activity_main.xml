@@ -18,6 +18,7 @@
         android:orientation="vertical">
 
 
+
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolBar"
             android:layout_width="match_parent"
@@ -29,17 +30,40 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:text="@string/app_name"
+                android:text="易得快报"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/sp_18" />
 
         </android.support.v7.widget.Toolbar>
 
-
-        <FrameLayout
-            android:id="@+id/frame"
+        <android.support.design.widget.TabLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="@dimen/dp_38"
+            android:id="@+id/main_tl"
+            app:tabBackground="@drawable/selector_tab"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable"
+            app:tabSelectedTextColor="@color/colorMain"
+
+            app:tabTextColor="@color/tab_text"
+            app:tabMaxWidth="55dp"
+            app:tabMinWidth="55dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorBG" />
+
+        <android.support.v4.view.ViewPager
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fragment_vp" />
+
+
+        <!--<FrameLayout-->
+        <!--android:id="@+id/frame"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent" />-->
     </LinearLayout>
 
 

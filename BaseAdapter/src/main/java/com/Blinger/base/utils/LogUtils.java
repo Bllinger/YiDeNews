@@ -2,7 +2,7 @@ package com.Blinger.base.utils;
 
 import android.util.Log;
 
-import com.orhanobut.logger.Logger;
+
 
 /**
  * 作者：310Lab
@@ -20,7 +20,7 @@ public class LogUtils
     {
         if (isDebug)
         {
-            Logger.v(msg);
+            LogUtils.v(msg);
         }
     }
 
@@ -28,7 +28,7 @@ public class LogUtils
     {
         if (isDebug)
         {
-            Logger.d(msg);
+            LogUtils.d(msg);
         }
     }
 
@@ -36,7 +36,7 @@ public class LogUtils
     {
         if (isDebug)
         {
-            Logger.i( msg);
+            LogUtils.i(msg);
         }
     }
 
@@ -44,7 +44,7 @@ public class LogUtils
     {
         if (isDebug)
         {
-            Logger.w(msg);
+            LogUtils.w(msg);
         }
     }
 
@@ -52,7 +52,7 @@ public class LogUtils
     {
         if (isDebug)
         {
-            Logger.e( msg);
+            LogUtils.e(msg);
         }
     }
 
@@ -60,7 +60,7 @@ public class LogUtils
     {
         if (isDebug)
         {
-            Logger.json(msg);
+            LogUtils.json(msg);
         }
     }
 

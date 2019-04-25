@@ -5,11 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.TextUtils;
 
-import com.facebook.stetho.Stetho;
-import com.github.moduth.blockcanary.BlockCanary;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
-import com.squareup.leakcanary.LeakCanary;
+//
+//import com.github.moduth.blockcanary.BlockCanary;
+
+
 
 import com.tencent.smtt.sdk.QbSdk;
 
@@ -49,14 +48,14 @@ public class InitializeManager extends IntentService
             String action = intent.getAction();
             if (!TextUtils.isEmpty(action) && action.equals(TAG))
             {
-                Logger.addLogAdapter(new AndroidLogAdapter());
-                Stetho.initializeWithDefaults(getApplicationContext());
+                //Logger.addLogAdapter(new AndroidLogAdapter());
+                //Stetho.initializeWithDefaults(getApplicationContext());
                 /*初始化Bugly*/
 
                 /*初始化内存泄漏检测工具*/
-                LeakCanary.install(getApplication());
+                //LeakCanary.install(getApplication());
                 /*BlockCanar UI卡顿检测工具*/
-                BlockCanary.install(getApplicationContext(), new AppBlockCanaryContext()).start();
+                //BlockCanary.install(getApplicationContext(), new AppBlockCanaryContext()).start();
                 /*初始化X5内核*/
                 QbSdk.initX5Environment(getApplicationContext(), null);
             }

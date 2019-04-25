@@ -7,9 +7,7 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.facebook.stetho.Stetho;
-import com.orhanobut.logger.AndroidLogAdapter;
-import com.orhanobut.logger.Logger;
+
 import com.Blinger.base.utils.NetChangeReceiver;
 import com.Blinger.base.utils.NetUtils;
 
@@ -36,9 +34,9 @@ public class  BaseApplication extends Application
         super.onCreate();
         //Log打印日志
         context = getApplicationContext();
-        Logger.addLogAdapter(new AndroidLogAdapter());
+        //Logger.addLogAdapter(new AndroidLogAdapter());
         //数据库调试
-        Stetho.initializeWithDefaults(getApplicationContext());
+        //Stetho.initializeWithDefaults(getApplicationContext());
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks()
         {
             private NetChangeReceiver receiver;

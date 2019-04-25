@@ -11,9 +11,11 @@
 
     <!--启动页主题-->
         <style name="SplashTheme" parent="AppTheme">
-        <item name="android:windowBackground">@drawable/bg_splash</item>
+            <item name="android:windowBackground">@drawable/splash</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowNoTitle">true</item>
+            <item name="windowActionBar">false</item>
+            <item name="android:windowTranslucentStatus">true</item>
     </style>
 
     <style name="main_menu_animstyle">
@@ -57,12 +59,4 @@
         <item name="android:windowExitAnimation">@anim/anim_popup_out</item>
     </style>
 
-    <style name="MySwitch" parent="Theme.AppCompat.Light">
-        <!--开启时的颜色-->
-        <item name="colorControlActivated">@color/colorMain</item>
-        <!--关闭时的颜色-->
-        <item name="colorSwitchThumbNormal">@color/colorTime</item>
-        <!--关闭时的轨迹颜色取30%的颜色-->
-        <item name="android:colorForeground">@color/colorTime</item>
-    </style>
 </resources>

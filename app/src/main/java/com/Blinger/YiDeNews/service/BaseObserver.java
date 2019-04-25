@@ -34,7 +34,7 @@ public abstract class BaseObserver<T> implements Observer<BaseBean<DataBean<T>>>
         if (model.getCode() == 0)
         {
             //LogUtils.d(Constant.debugName,String.valueOf(model.getT()));
-            LogUtils.d(Constant.debugName,"into onNext");
+            //LogUtils.d(Constant.debugName,"into onNext");
 
             onSuccess(model.getT().getT());
 //            if (model.getT().getCode() != 0){

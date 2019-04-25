@@ -156,7 +156,7 @@
             android:layout_height="@dimen/dp_38"
             android:background="@drawable/review_hint"
             android:layout_marginTop="@dimen/dp_5"
-            android:layout_marginRight="@dimen/dp_68"
+            android:layout_marginRight="@dimen/dp_108"
             android:layout_marginLeft="@dimen/dp_5"
             android:layout_marginBottom="@dimen/dp_5"
             android:text="  写一点什么吧......"
@@ -167,7 +167,7 @@
             android:layout_width="@dimen/dp_60"
             android:layout_height="@dimen/dp_28"
             android:layout_marginTop="@dimen/dp_10"
-            android:layout_marginRight="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_40"
             android:layout_marginBottom="@dimen/dp_5"
             android:background="@drawable/btn_send_pressed"
             android:layout_alignParentRight="true"
@@ -175,6 +175,17 @@
             android:textColor="@color/colorWhite"
             android:id="@+id/rv_button"
             />
+
+        <ImageView
+            android:id="@+id/adjust_type_iv"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="@dimen/dp_5"
+            android:src="@drawable/type"
+            android:padding="@dimen/dp_5"
+            android:clickable="true"
+            android:focusable="true" />
     </RelativeLayout>
 
 

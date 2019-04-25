@@ -26,6 +26,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 {
     protected T mPresenter;
     private View rootView;
+    private boolean isFirstCreate = false;
     protected Activity mActivity;
     /**View布局是否可见**/
     protected boolean isUIVisible;
@@ -65,6 +66,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
     {
         super.onCreate(savedInstanceState);
         mPresenter = createPresenter();
+        isFirstCreate = true;
     }
 
     @Override
@@ -90,7 +92,10 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
         {
             if (BaseApplication.isIsNetConnect())
             {
-                netWork();
+                if (isFirstCreate) {
+                    netWork();
+                    isFirstCreate = false;
+                }
             }else
             {
                 alert(getString(R.string.alert_no_net_repeat));

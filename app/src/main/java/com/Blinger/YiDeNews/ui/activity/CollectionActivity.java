@@ -70,6 +70,9 @@ public class CollectionActivity extends BaseActivity
                         .setText(data.getAuthorName(), R.id.item_author)
                         .setText(data.getDate(), R.id.item_time)
                         .setImageResource(data.getThumbnailPicS(), R.id.item_img)
+                        .setVisible(R.id.none_interest_iv, false)
+                        .setVisible(R.id.item_rl_bottom, false)
+                        .setVisible(R.id.item_rl_tail_toast, false)
                         .itemView.setOnClickListener(new View.OnClickListener()
                 {
                     @Override
