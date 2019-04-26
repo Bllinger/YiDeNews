@@ -91,6 +91,11 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         notifyItemRangeInserted(index, list == null ? 0 : list.size());
     }
 
+    public void removeData(int position) {
+        this.mList.remove(position);
+        notifyItemRemoved(position);
+    }
+
     public void setHeadeView(View view, @IntRange(from = 0) int index)
     {
         if (view == null)

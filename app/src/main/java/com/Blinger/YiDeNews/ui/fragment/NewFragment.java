@@ -118,7 +118,13 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
                         .setImageResource(data.getThumbnailPicS(), R.id.item_img)
                         .setOnClickListener(R.id.none_interest_iv, view -> {
                             FitPopupUtil fitPopupUtil = new FitPopupUtil(getActivity());
-                            fitPopupUtil.setOnClickListener(reason -> mPresenter.postEnjoy(data.getUniquekey(), uuid, reason));
+                            fitPopupUtil.setOnClickListener(new FitPopupUtil.OnCommitClickListener() {
+                                @Override
+                                public void onClick(String reason) {
+                                    mPresenter.postEnjoy(data.getUniquekey(), uuid, reason);
+                                    mAdapter.removeData(position);
+                                }
+                            });
                             fitPopupUtil.showPopup(view);
                         })
                         .setOnClickListener(R.id.tv_tail_toast,view -> {
