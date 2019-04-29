@@ -128,6 +128,7 @@ public class SplashActivity extends BaseActivity<SplashPresenter> implements Bas
             editor.putString("name",location);
             editor.putInt("type",type);
             editor.putInt("typeSize", 2);
+            editor.putInt("recommend_type", 0);
 
 
 //            LogUtils.d(Constant.debugName, "firstStart:" + sharedPreferences.getBoolean("firstStart", true));

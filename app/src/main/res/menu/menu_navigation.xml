@@ -3,93 +3,6 @@
     xmlns:android.support.design="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <!--<item android:title="新闻类型"-->
-
-    <!--&gt;-->
-    <!--<menu>-->
-    <!--<group>-->
-    <!--<item-->
-    <!--android:id="@+id/menu_toutiao"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_toutiao"-->
-    <!--android:title="@string/menu_toutiao"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-    <!--<item-->
-    <!--android:id="@+id/menu_shehui"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_shehui"-->
-    <!--android:title="@string/menu_shehui"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-
-    <!--<item-->
-    <!--android:id="@+id/menu_guonei"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_guonei"-->
-    <!--android:title="@string/menu_guonei"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-
-    <!--<item-->
-    <!--android:id="@+id/menu_yule"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_yule"-->
-    <!--android:title="@string/menu_yule"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-
-    <!--<item-->
-    <!--android:id="@+id/menu_tiyu"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_tiyu"-->
-    <!--android:title="@string/menu_tiyu"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-
-    <!--<item-->
-    <!--android:id="@+id/menu_junshi"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_junshi"-->
-    <!--android:title="@string/menu_junshi"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-
-    <!--<item-->
-    <!--android:id="@+id/menu_keji"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_keji"-->
-    <!--android:title="@string/menu_keji"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-
-    <!--<item-->
-    <!--android:id="@+id/menu_caijing"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_caijing"-->
-    <!--android:title="@string/menu_caijing"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-    <!--<item-->
-    <!--android:id="@+id/menu_shishang"-->
-    <!--android:checkable="true"-->
-    <!--android:icon="@drawable/icon_shishang"-->
-    <!--android:title="@string/menu_shishang"-->
-    <!--android.support.design:itemTextColor="@color/nev_item"-->
-    <!--app:itemIconTint="@android:color/white" />-->
-
-
-    <!--</group>-->
-    <!--</menu>-->
-    <!--</item>-->
 
     <item android:title="更多">
         <menu>
@@ -101,6 +14,10 @@
                 android:id="@+id/menu_history"
                 android:icon="@drawable/icon_history"
                 android:title="@string/tv_history_title" />
+            <item
+                android:id="@+id/menu_recommend"
+                android:icon="@drawable/transform"
+                android:title="推荐引擎设置" />
             <item
                 android:id="@+id/menu_setting"
                 android:icon="@drawable/icon_setting"

@@ -1,6 +1,9 @@
 package com.Blinger.YiDeNews.ui.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,18 +15,22 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.Blinger.YiDeNews.App;
 import com.Blinger.YiDeNews.R;
 import com.Blinger.YiDeNews.model.NewTypeBean;
 import com.Blinger.YiDeNews.ui.MyView.FragmentAdapter;
 import com.Blinger.YiDeNews.ui.fragment.AboutFragment;
 import com.Blinger.YiDeNews.ui.fragment.NewFragment;
+import com.Blinger.YiDeNews.utils.ToastUtil;
 import com.Blinger.base.base.BaseActivity;
 import com.Blinger.base.base.BasePresenter;
 import com.Blinger.base.utils.SpUtils;
@@ -63,6 +70,7 @@ public class MainActivity extends BaseActivity {
 //    private List<Fragment> fragmentList = new ArrayList<>();
 
 
+
     @Override
     protected BasePresenter createPresenter() {
         return null;
@@ -92,7 +100,7 @@ public class MainActivity extends BaseActivity {
         fragmentVp.setAdapter(fragmentAdapter);
         mainTl.setupWithViewPager(fragmentVp);
 
-//
+
         //ToolBar点击事件
         mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -108,21 +116,7 @@ public class MainActivity extends BaseActivity {
             }
         });
         setNavigationItemSelectedListener();
-//        showFragment((String) SpUtils.getUtils(this).get("title", getString(R.string.menu_toutiao)));
 
-//        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b){
-//                    b = true;
-//                    LogUtils.d(Constant.debugName+"MainActivity","mySwitch");
-//                }else {
-//                    b = false;
-//                    LogUtils.d(Constant.debugName+"MainActivity","mySwitch");
-//                }
-//
-//            }
-//        });
     }
 
     /**
@@ -138,54 +132,6 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        super.onCreateOptionsMenu(menu);
-//
-//        getMenuInflater().inflate(R.menu.menu_navigation,menu);
-//
-//        final MenuItem menuItem = menu.findItem(R.id.menu_theme);
-//        SwitchCompat switchCompat = (SwitchCompat) menuItem.getActionView();
-//
-//        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b){
-//                    LogUtils.d(Constant.debugName+"MainActivity","mySwitch");
-//                }else {
-//                    LogUtils.d(Constant.debugName+"MainActivity","mySwitch");
-//                }
-//            }
-//        });
-//
-//        return true;
-//    }
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//    /**
-//     * 此方法用于初始化菜单，其中menu参数就是即将要显示的Menu实例。 返回true则显示该menu,false 则不显示;
-//     * (只会在第一次初始化菜单时调用) Inflate the menu; this adds items to the action bar
-//     * if it is present.
-//     */
-//        getMenuInflater().inflate(R.menu.menu_navigation,menu);
-//
-//        final MenuItem menuItem = menu.findItem(R.id.menu_theme);
-//        SwitchCompat switchCompat = (SwitchCompat) menuItem.getActionView();
-//
-//        switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-//                if (b){
-//                    LogUtils.d(Constant.debugName+"MainActivity","mySwitch");
-//                }else {
-//                    LogUtils.d(Constant.debugName+"MainActivity","mySwitch");
-//                }
-//            }
-//        });
-//
-//        return true;
-//    }
-
     /**
      * NavagationView菜单点击事件
      */
@@ -194,33 +140,6 @@ public class MainActivity extends BaseActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-//                    case R.id.menu_toutiao:
-//                        showFragment(getString(R.string.menu_toutiao));
-//                        break;
-//                    case R.id.menu_shehui:
-//                        showFragment(getString(R.string.menu_shehui));
-//                        break;
-//                    case R.id.menu_guonei:
-//                        showFragment(getString(R.string.menu_guonei));
-//                        break;
-//                    case R.id.menu_yule:
-//                        showFragment(getString(R.string.menu_yule));
-//                        break;
-//                    case R.id.menu_tiyu:
-//                        showFragment(getString(R.string.menu_tiyu));
-//                        break;
-//                    case R.id.menu_junshi:
-//                        showFragment(getString(R.string.menu_junshi));
-//                        break;
-//                    case R.id.menu_keji:
-//                        showFragment(getString(R.string.menu_keji));
-//                        break;
-//                    case R.id.menu_caijing:
-//                        showFragment(getString(R.string.menu_caijing));
-//                        break;
-//                    case R.id.menu_shishang:
-//                        showFragment(getString(R.string.menu_shishang));
-//                        break;
                     //收藏:
                     case R.id.menu_collection:
                         startActivity(new Intent(MainActivity.this, CollectionActivity.class));
@@ -228,6 +147,9 @@ public class MainActivity extends BaseActivity {
                     // 足迹
                     case R.id.menu_history:
                         startActivity(new Intent(MainActivity.this, HistoryActivity.class));
+                        break;
+                    case R.id.menu_recommend:
+                        showSingleChoiceDialog();
                         break;
                     //关于
                     case R.id.menu_about:
@@ -243,6 +165,41 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    int yourChoice;
+
+    private void showSingleChoiceDialog() {
+        SharedPreferences sharedPreferences = getSharedPreferences("init", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        //editor.putInt("recommend_type",0);
+        int index = sharedPreferences.getInt("recommend_type", 0);
+
+        final String[] items = {"热点新闻模式", "智能个性化推荐模式", "自由推送模式"};
+        yourChoice = -1;
+        AlertDialog.Builder singleChoiceDialog =
+                new AlertDialog.Builder(MainActivity.this);
+
+        singleChoiceDialog.setTitle("请选择推荐引擎模式");
+        // 第二个参数是默认选项，此处设置为0
+        singleChoiceDialog.setSingleChoiceItems(items, index,
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        yourChoice = which;
+                    }
+                });
+        singleChoiceDialog.setPositiveButton("确定",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (yourChoice != -1) {
+                            editor.putInt("recommend_type", yourChoice);
+                            editor.apply();
+                            ToastUtil.showToast(App.getContext(), "你选择了" + items[yourChoice]);
+                        }
+                    }
+                });
+        singleChoiceDialog.show();
+    }
 
 //    private void showFragment(String s) {
 //        if (s.equals(mTvTitle.getText().toString())) {
@@ -299,6 +256,17 @@ public class MainActivity extends BaseActivity {
 //        });
 
 //        return true;
+//        MenuItem switchItem = menu.findItem(R.id.menu_theme);
+//        mSwitch = (SwitchCompat) switchItem.getActionView().findViewById(R.id.view_switch);
+////        if (mNfcAdapter != null) {
+////            mSwitch.setChecked(mNfcAdapter.isEnabled());
+////        }
+//        mSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//                ToastUtil.getInstance().showSuccess(App.getContext(),"点击成功");
+//            }
+//        });
         return true;
     }
 

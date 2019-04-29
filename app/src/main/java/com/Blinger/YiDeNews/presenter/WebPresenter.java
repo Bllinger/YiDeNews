@@ -59,9 +59,9 @@ public class WebPresenter extends BasePresenter<BaseView>{
         );
     }
 
-    public void postReview(String newsId,String reviewId,String reviewType,String reviewContent,String UID,String commentTime){
+    public void postReview(String newsId, String reviewId, String reviewType, String reviewContent, String UID, String commentTime, String ip) {
         subscribe(RetrofitManager.getManager().getRetrofit().create(ApiService.class)
-                        .postReview(newsId, reviewId, reviewType, reviewContent, UID,commentTime),
+                        .postReview(newsId, reviewId, reviewType, reviewContent, UID, commentTime, ip),
                 new BaseObserver<List<UserTailBean>>() {
                     @Override
                     public void onSuccess(List<UserTailBean> userTailBeans) {

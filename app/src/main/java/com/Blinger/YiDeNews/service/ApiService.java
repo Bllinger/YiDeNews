@@ -53,7 +53,7 @@ public interface ApiService
     @Headers({"url_name:other"})
     @POST("/news/news/comment/update")
     @FormUrlEncoded
-    Observable<BaseBean<DataBean<List<UserTailBean>>>> postReview(@Field("newsUniqueKey") String newsId,@Field("commentUniqueKey") String reviewId,@Field("composeType") String reviewType,@Field("content") String reviewContent,@Field("userUniqueKey") String UID,@Field("commentTime") String commentTime);
+    Observable<BaseBean<DataBean<List<UserTailBean>>>> postReview(@Field("newsUniqueKey") String newsId, @Field("commentUniqueKey") String reviewId, @Field("composeType") String reviewType, @Field("content") String reviewContent, @Field("userUniqueKey") String UID, @Field("commentTime") String commentTime, @Field("ip") String ip);
 
     @Headers({"url_name:other"})
     @GET("/news/news/comment/get")

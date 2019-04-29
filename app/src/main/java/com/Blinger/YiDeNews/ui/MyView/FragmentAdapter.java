@@ -20,7 +20,7 @@ import java.util.List;
  */
 
 public class FragmentAdapter extends FragmentPagerAdapter {
-    private String[] titles = {"头条", "社会", "国内", "娱乐", "体育", "军事", "科技", "财经", "时尚"};
+    private String[] titles = {"头条", "社会", "国内", "国际", "体育", "军事", "科技", "财经", "健康", "汽车"};
     private HashMap<String, NewFragment> fragments = new HashMap<>();
 
     public FragmentAdapter(FragmentManager fm) {

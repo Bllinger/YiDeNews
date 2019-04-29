@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -33,6 +34,7 @@ import com.Blinger.YiDeNews.presenter.WebPresenter;
 import com.Blinger.YiDeNews.ui.MyView.AdjustTypeDialog;
 import com.Blinger.YiDeNews.ui.MyView.InputTextMsgDialog;
 import com.Blinger.YiDeNews.ui.MyView.RecyclerViewAdapter;
+import com.Blinger.YiDeNews.utils.IPUtils;
 import com.Blinger.YiDeNews.utils.Md5;
 import com.Blinger.YiDeNews.utils.ObservableScrollView;
 import com.Blinger.YiDeNews.utils.ToastUtil;
@@ -47,7 +49,17 @@ import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
 import org.greenrobot.eventbus.EventBus;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -311,7 +323,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         mRecyclerViewAdapter.addData(userNameList.size(), location, TimeUtils.getTime() + "", 0, reviewContent, 0, imageType, reviewId);
 
         //Long newsId,Long reviewId,String reviewType,String reviewContent,String UID
-        mPresenter.postReview(mData.getUniquekey(), reviewId, "1", reviewContent, uuid, TimeUtils.getTime());
+        mPresenter.postReview(mData.getUniquekey(), reviewId, "1", reviewContent, uuid, TimeUtils.getTime(), IPUtils.getIPAddress(App.getContext()));
     }
 
     //延迟启动recyclerview
@@ -383,6 +395,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         mPresenter.postHistory(mUserTail.getUserId(), mUserTail.getNewsId(), mUserTail.getNewsTitle(), mUserTail.getNewsType(), mUserTail.getScanTime(), mUserTail.getNewsUrl());//需要修改
         mPresenter.getReviewList(mData.getUniquekey(), uuid);//获取评论
     }
+
 
     //将历史记录保存到数据库
     private void appendHistory(NewBean mData) {
