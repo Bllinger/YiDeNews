@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Blinger.YiDeNews.App;
 import com.Blinger.YiDeNews.R;
@@ -79,7 +80,8 @@ import io.reactivex.schedulers.Schedulers;
  * 邮箱：1760567382@qq.com
  * 功能：
  */
-
+@SuppressWarnings("ALL")
+@SuppressLint("SetJavaScriptEnabled")
 public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseView {
     @Bind(R.id.layout)
     RelativeLayout mLayout;
@@ -152,7 +154,6 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         return R.layout.activity_web;
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
@@ -185,6 +186,9 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                 //处理输入文字
 //                LogUtils.d(Constant.debugName + "评论", msg);
                 newReview(msg);
+                Toast toast = Toast.makeText(App.getContext(), null, Toast.LENGTH_SHORT);
+                toast.setText("~评论成功~");
+                toast.show();
                 inputTextMsgDialog.dismiss();
             }
         });
@@ -225,10 +229,12 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
 
         //声明WebSettings子类
         webSettings = mWebView.getSettings();
+        //优先使用缓存
+        webSettings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         //如果访问的页面中要与Javascript交互，则webview必须设置支持Javascript
         webSettings.setJavaScriptEnabled(false);
 
-        webSettings.setDomStorageEnabled(true);
+        //webSettings.setDomStorageEnabled(true);
         //设置自适应屏幕，两者合用（下面这两个方法合用）
         //将图片调整到适合webview的大小
         webSettings.setUseWideViewPort(true);
@@ -246,7 +252,7 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
         //设置可以访问文件
         webSettings.setAllowFileAccess(true);
         //支持通过JS打开新窗口
-        webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
+        webSettings.setJavaScriptCanOpenWindowsAutomatically(false);
         //支持自动加载图片
         webSettings.setLoadsImagesAutomatically(true);
         //webSettings.setTextZoom(100);
@@ -433,7 +439,9 @@ public class WebViewActivity extends BaseActivity<WebPresenter> implements BaseV
                 } else {
                     imZan.setTag("un_zan");
                     imZan.setImageResource(R.drawable.zan_grey);
-                    ToastUtil.showToast(getApplicationContext(), "取消点赞");
+                    Toast toast = Toast.makeText(mActivity, null, Toast.LENGTH_SHORT);
+                    toast.setText("取消点赞");
+                    toast.show();
                     int i = --articleAcclaimCount;
                     tvZanNum.setText(i + "赞");//设置赞数
                     mPresenter.postAcclaim(mData.getUniquekey(), uuid, 1, -1);//文章点赞-1

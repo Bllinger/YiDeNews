@@ -113,7 +113,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment
 
     public void alert(String msg)
     {
-        Toast.makeText(mActivity, msg, Toast.LENGTH_SHORT).show();
+        Toast toast = Toast.makeText(mActivity, null, Toast.LENGTH_SHORT);
+        toast.setText(msg);
+        toast.show();
     }
 
     /**

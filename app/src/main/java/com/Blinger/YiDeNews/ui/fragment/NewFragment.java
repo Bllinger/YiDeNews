@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.Blinger.YiDeNews.ui.activity.MainActivity;
 import com.Blinger.base.BaseApplication;
 import com.github.florent37.viewanimator.ViewAnimator;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -195,7 +196,7 @@ public class NewFragment extends BaseFragment<NewPresenter> implements BaseView 
             return;
         }
 
-        mPresenter.getNewsList(mData.getDescript(), uuid);
+        mPresenter.getNewsList(mData.getDescript(), uuid, MainActivity.index);
     }
 
     /**

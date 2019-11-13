@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.Blinger.YiDeNews.App;
 import com.Blinger.YiDeNews.R;
@@ -68,6 +69,7 @@ public class MainActivity extends BaseActivity {
 
 //    private HashMap<String, NewFragment> fragments = new HashMap<>();
 //    private List<Fragment> fragmentList = new ArrayList<>();
+public static int index;
 
 
 
@@ -148,6 +150,7 @@ public class MainActivity extends BaseActivity {
                     case R.id.menu_history:
                         startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                         break;
+                    //切换引擎
                     case R.id.menu_recommend:
                         showSingleChoiceDialog();
                         break;
@@ -171,7 +174,7 @@ public class MainActivity extends BaseActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("init", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         //editor.putInt("recommend_type",0);
-        int index = sharedPreferences.getInt("recommend_type", 0);
+        index = sharedPreferences.getInt("recommend_type", 0);
 
         final String[] items = {"热点新闻模式", "智能个性化推荐模式", "自由推送模式"};
         yourChoice = -1;
@@ -194,7 +197,9 @@ public class MainActivity extends BaseActivity {
                         if (yourChoice != -1) {
                             editor.putInt("recommend_type", yourChoice);
                             editor.apply();
-                            ToastUtil.showToast(App.getContext(), "你选择了" + items[yourChoice]);
+                            Toast toast = Toast.makeText(App.getContext(), null, Toast.LENGTH_SHORT);
+                            toast.setText("你选择了" + items[yourChoice]);
+                            toast.show();
                         }
                     }
                 });

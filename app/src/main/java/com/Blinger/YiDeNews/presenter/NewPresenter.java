@@ -26,13 +26,13 @@ public class NewPresenter extends BasePresenter<BaseView>
     }
 
 
-    public void getNewsList(String type,String userId)
+    public void getNewsList(String type, String userId, int index)
     {
         //LogUtils.d(Constant.debugName+"NewPresenter   ",type);
         if ("top".equals(type)){
             subscribe(
                     RetrofitManager.getManager().getRetrofit().create(ApiService.class)
-                            .getMyNewsList(userId),
+                            .getMyNewsList(userId, index),
                     new BaseObserver<List<NewBean>>()
                     {
                         @Override
@@ -58,7 +58,7 @@ public class NewPresenter extends BasePresenter<BaseView>
             subscribe
                     (
                             RetrofitManager.getManager().getRetrofit().create(ApiService.class)
-                                    .getNewsList("toutiao".equals(type) ? "top" : type, userId),
+                                    .getNewsList("toutiao".equals(type) ? "top" : type, userId, index),
                             new BaseObserver<List<NewBean>>()
                             {
                                 @Override

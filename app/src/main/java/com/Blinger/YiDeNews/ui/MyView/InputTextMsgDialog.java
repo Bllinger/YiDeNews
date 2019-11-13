@@ -123,7 +123,9 @@ public class InputTextMsgDialog extends AppCompatDialog {
                 String msg = messageTextView.getText().toString().trim();
                 if (msg.length() > maxNumber) {
                     //ToastUtil.makeText(mContext, "超过最大字数限制", Toast.LENGTH_LONG).show();
-                    ToastUtil.showToast(mContext,"超过最大字数限制");
+                    Toast toast = Toast.makeText(mContext, null, Toast.LENGTH_SHORT);
+                    toast.setText("超过最大字数限制");
+                    toast.show();
                     return;
                 }
                 if (!TextUtils.isEmpty(msg)) {
